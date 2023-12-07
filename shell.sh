@@ -1,0 +1,1 @@
+nohup python3 -u alert.py > alert.txt &
