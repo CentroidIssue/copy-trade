@@ -1,20 +1,20 @@
 const crypto = require('crypto');
 const axios = require('axios');
-const secret = require('config/secret.js')
+const secret = require('./config/secret.js')
+const public = require('./config/public.js');
+const { builtinModules } = require('module');
 const FUTURES_API_URL = 'https://fapi.binance.com';
 const FUTURES_API_URL_TEST = 'https://testnet.binancefuture.com';
 
-const DEBUGGING = true; // Set this to false for production
+public.DEBUGGING = false; // Set this to false for production
 
-const BINANCE_API_KEY = DEBUGGING ? 'your_test_api_key' : 'your_api_key';
-const BINANCE_API_SECRET = DEBUGGING ? 'your_test_api_secret' : 'your_api_secret';
-
-const API_KEY = DEBUGGING ? BINANCE_API_KEY_TEST : BINANCE_API_KEY;
-const API_SECRET = DEBUGGING ? BINANCE_API_SECRET_TEST : BINANCE_API_SECRET;
-const ORDER_URL = DEBUGGING ? `${FUTURES_API_URL_TEST}/fapi/v1/order` : `${FUTURES_API_URL}/fapi/v1/order`;
+const API_KEY = public.DEBUGGING ? secret.BINANCE_API_KEY_TEST : secret.BINANCE_API_KEY;
+const API_SECRET = public.DEBUGGING ? secret.BINANCE_API_SECRET_TEST : secret.BINANCE_API_SECRET;
+const ORDER_URL = public.DEBUGGING ? `${FUTURES_API_URL_TEST}/fapi/v1/order` : `${FUTURES_API_URL}/fapi/v1/order`;
 
 const headers = {
   'X-MBX-APIKEY': API_KEY,
+  'Content-Type': 'application/json',
 };
 
 const client = axios.create();
@@ -137,6 +137,7 @@ async function futures_short_buying(symbol, quantity = null) {
 }
 
 async function futures_long_buying(symbol, quantity, stoploss = null, takeprofit = null, price = null) {
+
   const params = {
     symbol,
     side: 'BUY',
@@ -151,7 +152,7 @@ async function futures_long_buying(symbol, quantity, stoploss = null, takeprofit
     params.timeinforce = 'GTC';
   }
   const signature = crypto.createHmac('sha256', API_SECRET).update(new URLSearchParams(params).toString()).digest('hex');
-  params.signature = signature;
+  params.signature = signature;  
   const order = await client.post(ORDER_URL, new URLSearchParams(params), { headers });
   const orderData = order.data;
   console.log(orderData);
@@ -280,6 +281,58 @@ async function futures_change_margin_type(symbol, marginType) {
   };
   const signature = crypto.createHmac('sha256', API_SECRET).update(new URLSearchParams(params).toString()).digest('hex');
   params.signature = signature;
-  const response = await client.post(url, new URLSearchParams(params));
+  const response = await client.post(url, new URLSearchParams(params), { headers });
   return response.data;
+}
+
+async function buy(symbol, quantity, stoploss = null, takeprofit = null, price = null) {
+  console.log(symbol, quantity, )
+  const params = {
+    symbol: symbol,
+    side: 'BUY',
+    type: 'MARKET',
+    quantity: quantity,
+    timestamp: Date.now(),
+  };
+  const signature = crypto.createHmac('sha256', API_SECRET).update(new URLSearchParams(params).toString()).digest('hex');
+  params.signature = signature;
+  console.log(ORDER_URL, params);
+  const order = client.post(ORDER_URL, new URLSearchParams(params), { headers }).then((res) => {
+    console.log(res.data);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+
+async function sell(symbol, quantity, stoploss = null, takeprofit = null, price = null) {
+  const params = {
+    symbol,
+    side: 'SELL',
+    type: 'MARKET',
+    quantity,
+    timestamp: Date.now(),
+  };
+  const signature = crypto.createHmac('sha256', API_SECRET).update(new URLSearchParams(params).toString()).digest('hex');
+  params.signature = signature;
+  const order = await client.post(ORDER_URL, new URLSearchParams(params), { headers });
+  console.log(order.data);
+  return order.data;
+}
+
+module.exports = {
+  futures_change_leverage,
+  futures_get_leverage,
+  futures_short_selling,
+  futures_short_buying,
+  futures_long_buying,
+  futures_long_selling,
+  futures_cancel_all_open_orders,
+  futures_profit_calculator,
+  futures_stop_calculator,
+  futures_get_quantity_precision,
+  futures_get_price_precision,
+  futures_change_margin_type,
+  GetAccountBalance,
+  buy,
+  sell,
 }

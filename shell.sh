@@ -1,1 +1,1 @@
-nohup python3 -u alert.py > alert.txt &
+nohup node alert.js > alert.txt &
