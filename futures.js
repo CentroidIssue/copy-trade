@@ -314,9 +314,12 @@ async function sell(symbol, quantity, stoploss = null, takeprofit = null, price 
   };
   const signature = crypto.createHmac('sha256', API_SECRET).update(new URLSearchParams(params).toString()).digest('hex');
   params.signature = signature;
-  const order = await client.post(ORDER_URL, new URLSearchParams(params), { headers });
-  console.log(order.data);
-  return order.data;
+  console.log(ORDER_URL, params);
+  const order = client.post(ORDER_URL, new URLSearchParams(params), { headers }).then((res) => {
+    console.log(res.data);
+  }).catch((err) => {
+    console.log(err);
+  });
 }
 
 module.exports = {
