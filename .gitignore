@@ -10,4 +10,6 @@ output.json
 log.json
 node_modules
 test.txt
+copy-trade.json
+secret.js
 ```
