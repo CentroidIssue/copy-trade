@@ -61,12 +61,14 @@ async function run() {
                             quantity = quantity * public.ORDER_SCALE;
                             //Round to decimal
                             quantity = quantity.toFixed(decimal);
+                            futures.buy(position['symbol'], quantity);
                         }
                         else{
                             quantity = -quantity;
                             quantity = quantity * public.ORDER_SCALE;
                             //Round to decimal
                             quantity = quantity.toFixed(decimal);
+                            futures.sell(position['symbol'], quantity);
                         }
                         noti.messengerBotSendText(public.USER_ID[0], );
                     } else if (row.positionAmount != position['positionAmount']) {
@@ -78,12 +80,14 @@ async function run() {
                             quantity = quantity * public.ORDER_SCALE;
                             //Round to decimal
                             quantity = quantity.toFixed(decimal);
+                            futures.buy(position['symbol'], quantity);
                         }
                         else if (quantity < 0){
                             quantity = -quantity;
                             quantity = quantity * public.ORDER_SCALE;
                             //Round to decimal
                             quantity = quantity.toFixed(decimal);
+                            futures.sell(position['symbol'], quantity);
                         }
                         noti.messengerBotSendText(public.USER_ID[0], "Changed position: " + serialize_message(position) + "Initial position: " + row.positionAmount);
                         console.log("Position amount of " + position['symbol'] + " has changed");

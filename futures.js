@@ -137,7 +137,6 @@ async function futures_short_buying(symbol, quantity = null) {
 }
 
 async function futures_long_buying(symbol, quantity, stoploss = null, takeprofit = null, price = null) {
-
   const params = {
     symbol,
     side: 'BUY',
