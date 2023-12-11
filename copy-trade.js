@@ -56,8 +56,8 @@ async function run() {
                     }
                     if (!row) {
                         db.run(`INSERT INTO positions VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [position['id'], position['symbol'], position['collateral'], position['positionAmount'], position['entryPrice'], position['unrealizedProfit'], position['cumRealized'], position['askNotional'], position['bidNotional'], position['notionalValue'], position['markPrice'], position['leverage'], position['isolated'], position['isolatedWallet'], position['adl'], position['positionSide'], position['breakEvenPrice']]);
-                        console.log("New position:\n" + serialize_message(position));
-                        if (side == "BUY") {
+                        console.log(public.USER_ID[0], "New position:\n" + serialize_message(position));
+                        if (side == "LONG") {
                             quantity = quantity * public.ORDER_SCALE;
                             //Round to decimal
                             quantity = quantity.toFixed(decimal);

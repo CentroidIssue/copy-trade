@@ -5,7 +5,7 @@ const public = require('./config/public.js');
 const noti = require('./noti.js')
 const { exit } = require('process');
 const db = new sqlite3.Database('database/checker.db');
-const url = "https://www.binance.com/bapi/futures/v1/friendly/future/copy-trade/lead-data/positions?portfolioId=3759467119395688704";
+const url = `https://www.binance.com/bapi/futures/v1/friendly/future/copy-trade/lead-data/positions?portfolioId=${public.PROFILE_ID}}`;
 
 console.log("Opened database successfully");
 
