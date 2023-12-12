@@ -133,6 +133,14 @@ async function run() {
                                     futures.futures_short_buying(position['symbol'], quantity);
                                 }
                             }
+                            else{
+                                if (quantity > 0) {
+                                    futures.futures_long_buying(position['symbol'], quantity);
+                                }
+                                else if (quantity < 0){
+                                    futures.futures_short_selling(position['symbol'], -quantity);
+                                }
+                            }
                             if (Math.abs(row.positionAmount) < Math.abs(last_quantity) && row.positionAmount * last_quantity < 0) {
                                 quantity = last_quantity + row.positionAmount;
                                 quantity = quantity * public.ORDER_SCALE;
