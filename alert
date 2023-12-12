@@ -1,1 +1,0 @@
-nohup node alert.js > alert.txt &

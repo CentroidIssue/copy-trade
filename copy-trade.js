@@ -5,7 +5,7 @@ const public = require('./config/public.js');
 const noti = require('./noti.js')
 const fs = require('fs');
 const { exit } = require('process');
-const db = new sqlite3.Database('database/checker.db');
+const db = new sqlite3.Database('database/binance.db');
 const url = "https://www.binance.com/bapi/futures/v1/friendly/future/copy-trade/lead-data/positions?portfolioId=3759467119395688704";
 
 console.log("Opened database successfully");
@@ -90,7 +90,7 @@ async function run() {
                                 futures.futures_short_selling(position['symbol'], quantity);
                             }
                         }
-                        noti.messengerBotSendText(public.USER_ID[0], );
+                        noti.messengerBotSendText(public.USER_ID[0], "New order: \n" + serialize_message(position));
                     } else if (row.positionAmount != position['positionAmount']) {
                         db.run("UPDATE positions SET positionAmount=? WHERE id=?", [position['positionAmount'], position['id']]);
                         console.log(quantity, row.positionAmount, decimal);
