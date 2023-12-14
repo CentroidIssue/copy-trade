@@ -1,7 +1,7 @@
 {
   "name": "copy-trade",
   "version": "1.0.0",
-  "description": "",
+  "description": "```bash $ npm create $ npm i ```",
   "main": "futures.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

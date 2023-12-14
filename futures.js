@@ -78,11 +78,11 @@ async function futures_short_selling(symbol, quantity, stoploss = null, takeprof
   }
   const signature = crypto.createHmac('sha256', API_SECRET).update(new URLSearchParams(params).toString()).digest('hex');
   params.signature = signature;
-  const order = await client.post(ORDER_URL, new URLSearchParams(params), { headers }).catch((err) => {
+  const order = await client.post(ORDER_URL, new URLSearchParams(params), { headers }).then((res) => {
+    console.log(res.data);
+  }).catch((err) => {
     console.log(err);
   });
-  const orderData = order.data;
-  console.log(orderData);
 
   let profitOrder = { orderId: '' };
   let lossOrder = { orderId: '' };
@@ -99,10 +99,11 @@ async function futures_short_selling(symbol, quantity, stoploss = null, takeprof
     };
     const profitSignature = crypto.createHmac('sha256', API_SECRET).update(new URLSearchParams(profitParams).toString()).digest('hex');
     profitParams.signature = profitSignature;
-    const profitOrderResponse = await client.post(ORDER_URL, new URLSearchParams(profitParams), { headers }).catch((err) => {
+    const profitOrderResponse = await client.post(ORDER_URL, new URLSearchParams(profitParams), { headers }).then((res) => {
+      console.log(res.data);
+    }).catch((err) => {
       console.log(err);
     });
-    profitOrder = profitOrderResponse.data;
   }
 
   if (stoploss) {
@@ -117,13 +118,12 @@ async function futures_short_selling(symbol, quantity, stoploss = null, takeprof
     };
     const lossSignature = crypto.createHmac('sha256', API_SECRET).update(new URLSearchParams(lossParams).toString()).digest('hex');
     lossParams.signature = lossSignature;
-    const lossOrderResponse = await client.post(ORDER_URL, new URLSearchParams(lossParams), { headers }).catch((err) => {
+    const lossOrderResponse = await client.post(ORDER_URL, new URLSearchParams(lossParams), { headers }).then((res) => {
+      console.log(res.data);
+    }).catch((err) => {
       console.log(err);
     });
-    lossOrder = lossOrderResponse.data;
   }
-
-  return [orderData, profitOrder, lossOrder];
 }
 
 async function futures_short_buying(symbol, quantity = null) {
@@ -137,11 +137,11 @@ async function futures_short_buying(symbol, quantity = null) {
   };
   const signature = crypto.createHmac('sha256', API_SECRET).update(new URLSearchParams(params).toString()).digest('hex');
   params.signature = signature;
-  const order = await client.post(ORDER_URL, new URLSearchParams(params), { headers }).catch((err) => {
+  const order = await client.post(ORDER_URL, new URLSearchParams(params), { headers }).then((res) => {
+    console.log(res.data);
+  }).catch((err) => {
     console.log(err);
   });
-  console.log(order.data);
-  return order.data;
 }
 
 async function futures_long_buying(symbol, quantity, stoploss = null, takeprofit = null, price = null) {
@@ -160,12 +160,11 @@ async function futures_long_buying(symbol, quantity, stoploss = null, takeprofit
   }
   const signature = crypto.createHmac('sha256', API_SECRET).update(new URLSearchParams(params).toString()).digest('hex');
   params.signature = signature;  
-  const order = await client.post(ORDER_URL, new URLSearchParams(params), { headers }).catch((err) => {
+  const order = await client.post(ORDER_URL, new URLSearchParams(params), { headers }).then((res) => {
+    console.log(res.data);
+  }).catch((err) => {
     console.log(err);
   });
-  const orderData = order.data;
-  console.log(orderData);
-
   let profitOrder = { orderId: '' };
   let lossOrder = { orderId: '' };
 
@@ -181,10 +180,11 @@ async function futures_long_buying(symbol, quantity, stoploss = null, takeprofit
     };
     const profitSignature = crypto.createHmac('sha256', API_SECRET).update(new URLSearchParams(profitParams).toString()).digest('hex');
     profitParams.signature = profitSignature;
-    const profitOrderResponse = await client.post(ORDER_URL, new URLSearchParams(profitParams), { headers }).catch((err) => {
+    const profitOrderResponse = await client.post(ORDER_URL, new URLSearchParams(profitParams), { headers }).then((res) => {  
+      console.log(res.data);
+    }).catch((err) => {
       console.log(err);
     });
-    profitOrder = profitOrderResponse.data;
   }
 
   if (stoploss) {
@@ -199,12 +199,12 @@ async function futures_long_buying(symbol, quantity, stoploss = null, takeprofit
     };
     const lossSignature = crypto.createHmac('sha256', API_SECRET).update(new URLSearchParams(lossParams).toString()).digest('hex');
     lossParams.signature = lossSignature;
-    const lossOrderResponse = await client.post(ORDER_URL, new URLSearchParams(lossParams), { headers }).catch((err) => {
+    const lossOrderResponse = await client.post(ORDER_URL, new URLSearchParams(lossParams), { headers }).then((res) => {
+      console.log(res.data);
+    }).catch((err) => {
       console.log(err);
     });
-    lossOrder = lossOrderResponse.data;
   }
-  return [orderData, profitOrder, lossOrder];
 }
 
 async function futures_long_selling(symbol, quantity = null) {
@@ -218,11 +218,11 @@ async function futures_long_selling(symbol, quantity = null) {
   };
   const signature = crypto.createHmac('sha256', API_SECRET).update(new URLSearchParams(params).toString()).digest('hex');
   params.signature = signature;
-  const order = await client.post(ORDER_URL, new URLSearchParams(params), { headers }).catch((err) => {
+  const order = await client.post(ORDER_URL, new URLSearchParams(params), { headers }).then((res) => {
+    console.log(res.data);
+  }).catch((err) => {
     console.log(err);
   });
-  console.log(order.data);
-  return order.data;
 }
 
 async function futures_cancel_all_open_orders(symbol) {
@@ -233,9 +233,11 @@ async function futures_cancel_all_open_orders(symbol) {
   };
   const signature = crypto.createHmac('sha256', API_SECRET).update(new URLSearchParams(params).toString()).digest('hex');
   params.signature = signature;
-  const order = await client.delete(url, { params, headers });
-  console.log(params, order.data);
-  return order.data;
+  const order = await client.delete(url, { params, headers }).then((res) => {
+    console.log(res.data);
+  }).catch((err) => {
+    console.log(err);
+  });
 }
 
 function futures_profit_calculator(percent, start, end) {
@@ -295,8 +297,11 @@ async function futures_change_margin_type(symbol, marginType) {
   };
   const signature = crypto.createHmac('sha256', API_SECRET).update(new URLSearchParams(params).toString()).digest('hex');
   params.signature = signature;
-  const response = await client.post(url, new URLSearchParams(params), { headers });
-  return response.data;
+  const response = await client.post(url, new URLSearchParams(params), { headers }).then((res) => {
+    console.log(res.data);
+  }).catch((err) => {
+    console.log(err);
+  });
 }
 
 async function buy(symbol, quantity, stoploss = null, takeprofit = null, price = null) {
