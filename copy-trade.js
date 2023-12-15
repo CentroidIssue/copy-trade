@@ -11,7 +11,11 @@ const base_url = "https://www.binance.com/bapi/futures/v1/friendly/future/copy-t
 
 console.log("Opened database successfully");
 
-async function init_sqlite3() {
+async function init() {
+    //create file database/binance.db if not exist
+    fs.writeFile('database/binance.db', '', function (err) {
+        if (err) return console.log(err);
+    });
     //get all data for all public.PROFILE_ID using axios asynchronously
     const promises = public.PROFILE_ID.map(async (id) => {
         const url = base_url + "portfolioId=" + id.ID;
@@ -194,7 +198,7 @@ async function run() {
 }
 
 async function main() {
-    await init_sqlite3();
+    await init();
     try {
         await run();
     } catch (e) {
