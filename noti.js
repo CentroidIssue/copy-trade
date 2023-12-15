@@ -1,5 +1,5 @@
 const axios = require('axios');
-const secret = require('./config/secret.js');
+const secret = require('./config/secret.json');
 const TELEGRAM_CHAT_ID = secret.TELEGRAM_CHAT_ID;
 const TELEGRAM_BOT_TOKEN = secret.TELEGRAM_BOT_TOKEN;
 const MESSENGER_PAGE_ID = secret.MESSENGER_PAGE_ID;
