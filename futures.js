@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const axios = require('axios');
-const secret = require('./config/secret.js')
-const public = require('./config/public.js');
+const secret = require('./config/secret.json')
+const public = require('./config/public.json');
 const { builtinModules } = require('module');
 const FUTURES_API_URL = 'https://fapi.binance.com';
 const FUTURES_API_URL_TEST = 'https://testnet.binancefuture.com';
@@ -63,6 +63,9 @@ async function GetAccountBalance() {
 }
 
 async function futures_short_selling(symbol, quantity, stoploss = null, takeprofit = null, price = null) {
+  if (public.ALERT_ONLY){
+    return;
+  }
   const params = {
     symbol,
     side: 'SELL',
@@ -127,6 +130,9 @@ async function futures_short_selling(symbol, quantity, stoploss = null, takeprof
 }
 
 async function futures_short_buying(symbol, quantity = null) {
+  if (public.ALERT_ONLY){
+    return;
+  }
   const params = {
     symbol,
     side: 'BUY',
@@ -145,6 +151,9 @@ async function futures_short_buying(symbol, quantity = null) {
 }
 
 async function futures_long_buying(symbol, quantity, stoploss = null, takeprofit = null, price = null) {
+  if (public.ALERT_ONLY){
+    return;
+  }
   const params = {
     symbol,
     side: 'BUY',
@@ -208,6 +217,9 @@ async function futures_long_buying(symbol, quantity, stoploss = null, takeprofit
 }
 
 async function futures_long_selling(symbol, quantity = null) {
+  if (public.ALERT_ONLY){
+    return;
+  }
   const params = {
     symbol,
     side: 'SELL',
@@ -305,6 +317,9 @@ async function futures_change_margin_type(symbol, marginType) {
 }
 
 async function buy(symbol, quantity, stoploss = null, takeprofit = null, price = null) {
+  if (public.ALERT_ONLY){
+    return;
+  }
   console.log(symbol, quantity, )
   const params = {
     symbol: symbol,
@@ -324,6 +339,9 @@ async function buy(symbol, quantity, stoploss = null, takeprofit = null, price =
 }
 
 async function sell(symbol, quantity, stoploss = null, takeprofit = null, price = null) {
+  if (public.ALERT_ONLY){
+    return;
+  }
   const params = {
     symbol,
     side: 'SELL',
