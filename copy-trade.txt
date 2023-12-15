@@ -1,0 +1,10 @@
+Opened database successfully
+5591 9318 0
+-3727
+Position amount of FTMUSDT has changed
+3355 5591 0
+-2236
+Position amount of FTMUSDT has changed
+0 -20 0
+20
+Position amount of STORJUSDT has changed
