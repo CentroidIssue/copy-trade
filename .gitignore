@@ -3,3 +3,5 @@ config/secret.json
 node_modules
 copy-trade.txt
 database/*
+bybit.txt
+binance.txt

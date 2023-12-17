@@ -1,0 +1,1 @@
+nohup node bybit.js > bybit.txt &

@@ -8,4 +8,4 @@ ADD . /copy-trade
 
 RUN npm i
 
-CMD ["node", "copy-trade.js"]
+CMD ["node", "bybit.js"]
