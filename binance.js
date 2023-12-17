@@ -1,17 +1,17 @@
 const axios = require('axios');
 const sqlite3 = require('sqlite3').verbose();
-const futures = require('./futures.js');
+const futures = require('./binance_futures.js');
 const public = require('./config/public.json');
 const noti = require('./noti.js')
 const fs = require('fs');
 const { exit } = require('process');
 const { table } = require('console');
 const db = new sqlite3.Database('database/binance.db');
-const base_url = "https://www.binance.com/bapi/futures/v1/friendly/future/copy-trade/lead-data/positions?";
 
 console.log("Opened database successfully");
 
 async function init() {
+    noti.messengerBotSendText(public.USER_ID[0], "Background job is starting");
     //create file database/binance.db if not exist
     fs.writeFile('database/binance.db', '', function (err) {
         if (err) return console.log(err);
@@ -199,6 +199,7 @@ async function run() {
 
 async function main() {
     await init();
+    console.log("Database is initialized");
     try {
         await run();
     } catch (e) {
@@ -206,4 +207,5 @@ async function main() {
     }
 }
 
-main();
+
+main().catch(console.error);

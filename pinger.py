@@ -1,9 +1,18 @@
-from config.public import *
-import httpx, time
+import requests
 
-url = f"http://{IP}:8000/checkNewOrder"
-client = httpx.Client()
+url = "https://api2.bybit.com/fapi/beehive/public/v1/common/position/list?leaderMark=5%2BiLUdFM3ACosoXvPUvW%2FA%3D%3D"
 
-while True:
-    response = client.get(url, timeout=10)
-    print("Data received")
+payload = {}
+headers = {
+    'Content-Type': 'application/json',
+    'Cookie': ''
+
+}
+
+response = requests.get(url, headers=headers, data=payload, timeout=100)
+
+response = requests.get(url, headers=headers, data=payload, timeout=100)
+
+response = requests.get(url, headers=headers, data=payload, timeout=100)
+
+print(response.text)

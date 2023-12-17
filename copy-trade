@@ -1,1 +1,0 @@
-nohup node copy-trade.js > copy-trade.txt &
