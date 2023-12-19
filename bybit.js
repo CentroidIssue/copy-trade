@@ -75,6 +75,7 @@ async function run() {
             });
             //wait for all promises to be resolved
             const responses = await Promise.all(promises);
+            console.log(responses);
             //store all responses in response.data
             responses.data = responses.map((response) => response.data);
             //For all public.LEADER_MARK and write data to ID.json
@@ -89,21 +90,24 @@ async function run() {
                 //compare data with database
                 data.forEach((position) => {
                     //if position is not in database
-                    db.get(`SELECT * FROM '${id.ID}' WHERE symbol=?`, [position['symbol']], (err, row) => {
+                    db.get(`SELECT * FROM '${id.ID}' WHERE symbol=? AND side=?`, [position['symbol'], position['side']], (err, row) => {
                         if (err) {
                             console.error(err.message);
                         }
                         if (!row){
                             //insert position to database
                             db.run(`INSERT INTO '${id.ID}' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [position['symbol'], position['entryPrice'], position['sizeX'], position['createdAtE3'], position['side'], position['leverageE2'], position['isIsolated'], position['transactTimeE3'], position['stopLossPrice'], position['takeProfitPrice'], position['takeProfitOrderId'], position['stopLossOrderId'], position['orderCostE8'], position['reCalcEntryPrice'], position['positionEntryPrice'], position['positionCycleVersion'], position['crossSeq'], position['closeFreeQtyX'], position['minPositionCostE8'], position['positionBalanceE8']]);
-                            //CConvert quantity to int then divide quantity by 1e9
-                            let quantity = parseInt(position['sizeX']) / 1e9;
-                            console.log(quantity);
+                            //CConvert quantity to int then divide quantity by 1e8
+                            let quantity = parseFloat(position['sizeX']) / 1e8;
+                            quantity = quantity * id.ORDER_SCALE.NUME / id.ORDER_SCALE.DENO;
+                            decimal = futures.function_get_decimal(position['symbol']);
+                            quantity = quantity.toFixed(decimal);
+                            console.log(quantity, position['sizeX'], 0);
                             if (position['side'] == "Buy") {
-                                futures.futures_long_buying(position['symbol'], quantity.toString());
+                                futures.futures_long_buying(position['symbol'], (quantity).toString());
                             }
                             else{
-                                futures.futures_short_selling(position['symbol'], quantity.toString());
+                                futures.futures_short_selling(position['symbol'], (quantity).toString());
                             }
                             noti.messengerBotSendText(public.USER_ID[0], serialize_message(position));
                         }
@@ -112,27 +116,53 @@ async function run() {
                             //if position is not equal to row
                             if (position.sizeX != row.sizeX) {
                                 //update position in database
-                                db.run(`UPDATE '${id.ID}' SET entryPrice = ?, sizeX = ?, createdAtE3 = ?, side = ?, leverageE2 = ?, isIsolated = ?, transactTimeE3 = ?, stopLossPrice = ?, takeProfitPrice = ?, takeProfitOrderId = ?, stopLossOrderId = ?, orderCostE8 = ?, reCalcEntryPrice = ?, positionEntryPrice = ?, positionCycleVersion = ?, crossSeq = ?, closeFreeQtyX = ?, minPositionCostE8 = ?, positionBalanceE8 = ? WHERE symbol = ?`, [position['entryPrice'], position['sizeX'], position['createdAtE3'], position['side'], position['leverageE2'], position['isIsolated'], position['transactTimeE3'], position['stopLossPrice'], position['takeProfitPrice'], position['takeProfitOrderId'], position['stopLossOrderId'], position['orderCostE8'], position['reCalcEntryPrice'], position['positionEntryPrice'], position['positionCycleVersion'], position['crossSeq'], position['closeFreeQtyX'], position['minPositionCostE8'], position['positionBalanceE8'], position['symbol']]);
-                                //CConvert quantity to int then divide quantity by 1e9
-                                let quantity = parseInt(position['sizeX']) / 1e9;
-                                quantity = quantity - parseInt(row.sizeX) / 1e9;
-                                console.log(quantity);
+                                db.run(`UPDATE '${id.ID}' SET 
+                                entryPrice = ?, 
+                                sizeX = ?, 
+                                createdAtE3 = ?, 
+                                leverageE2 = ?, 
+                                isIsolated = ?, 
+                                transactTimeE3 = ?, 
+                                stopLossPrice = ?, 
+                                takeProfitPrice = ?, 
+                                takeProfitOrderId = ?, 
+                                stopLossOrderId = ?, 
+                                orderCostE8 = ?, 
+                                reCalcEntryPrice = ?, 
+                                positionEntryPrice = ?, 
+                                positionCycleVersion = ?, 
+                                crossSeq = ?, 
+                                closeFreeQtyX = ?, 
+                                minPositionCostE8 = ?, 
+                                positionBalanceE8 = ? 
+                                WHERE symbol = ? AND side = ?`, [position['entryPrice'], position['sizeX'], position['createdAtE3'], position['leverageE2'], position['isIsolated'], position['transactTimeE3'], position['stopLossPrice'], position['takeProfitPrice'], position['takeProfitOrderId'], position['stopLossOrderId'], position['orderCostE8'], position['reCalcEntryPrice'], position['positionEntryPrice'], position['positionCycleVersion'], position['crossSeq'], position['closeFreeQtyX'], position['minPositionCostE8'], position['positionBalanceE8'], position['symbol'], position['side']]);
+                                //CConvert quantity to int then divide quantity by 1e8
+                                let quantity = parseInt(position['sizeX']) / 1e8;
+                                quantity = quantity - parseInt(row.sizeX) / 1e8;
+                                quantity = quantity * id.ORDER_SCALE.NUME / id.ORDER_SCALE.DENO;
+                                decimal = futures.function_get_decimal(position['symbol']);
+                                quantity = quantity.toFixed(decimal);
+                                console.log(quantity, position['sizeX'], row.sizeX);
                                 if (quantity > 0){
                                     if (position['side'] == "Buy") {
-                                        futures.futures_long_buying(position['symbol'], quantity.toString());
+                                        futures.futures_long_buying(position['symbol'], (quantity).toString());
                                     }
                                     else{
-                                        futures.futures_short_selling(position['symbol'], quantity.toString());
+                                        futures.futures_short_selling(position['symbol'], (quantity).toString());
                                     }
                                     noti.messengerBotSendText(public.USER_ID[0], serialize_message(position));
                                 }
                                 else{
                                     quantity = -quantity;
+                                    quantity = quantity * id.ORDER_SCALE.NUME / id.ORDER_SCALE.DENO;
+                                    decimal = futures.function_get_decimal(position['symbol']);
+                                    quantity = quantity.toFixed(decimal);
+                                    console.log(quantity, position['sizeX'], row.sizeX);
                                     if (position['side'] == "Buy") {
-                                        futures.futures_long_selling(position['symbol'], quantity.toString());
+                                        futures.futures_long_selling(position['symbol'], (quantity).toString());
                                     }
                                     else{
-                                        futures.futures_short_buying(position['symbol'], quantity.toString());
+                                        futures.futures_short_buying(position['symbol'], (quantity).toString());
                                     }
                                     noti.messengerBotSendText(public.USER_ID[0], serialize_message(position));
                                 }
@@ -146,16 +176,19 @@ async function run() {
                         console.error(err.message);
                     }
                     if (!data.some((position) => position.symbol == row.symbol)) {
-                        //delete position from database
-                        db.run(`DELETE FROM '${id.ID}' WHERE symbol = ?`, [row.symbol]);
-                        //CConvert quantity to int then divide quantity by 1e9
-                        let quantity = parseInt(row.sizeX) / 1e9;
+                        //delete position from database with symbol and side
+                        db.run(`DELETE FROM '${id.ID}' WHERE symbol = ? AND side = ?`, [row.symbol, row.side])
+                        //CConvert quantity to int then divide quantity by 1e8
+                        let quantity = parseInt(row.sizeX) / 1e8;
+                        quantity = quantity * id.ORDER_SCALE.NUME / id.ORDER_SCALE.DENO;
+                        decimal = futures.function_get_decimal(row.symbol);
+                        quantity = quantity.toFixed(decimal);
                         console.log(quantity);
                         if (row.side == "Buy") {
-                            futures.futures_long_selling(row.symbol, quantity.toString());
+                            futures.futures_long_selling(row.symbol, (quantity).toString());
                         }
                         else{
-                            futures.futures_short_buying(row.symbol, quantity.toString());
+                            futures.futures_short_buying(row.symbol, (quantity).toString());
                         }
                         noti.messengerBotSendText(public.USER_ID[0], serialize_message(row));
                     }

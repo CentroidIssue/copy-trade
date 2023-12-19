@@ -47,6 +47,7 @@ async function futures_long_buying(symbol, quantity, stoploss = null, takeprofit
         data_json['price'] = price;
         data_json['orderType'] = "Limit";
     }
+    console.log(data_json);
     let data = JSON.stringify(data_json);
     headers['X-BAPI-TIMESTAMP'] = Date.now();
     // # rule:
@@ -197,8 +198,24 @@ async function futures_short_buying(symbol, quantity){
         console.log(error);
     });
 }
+/**
+ * 
+ * @param {*} symbol 
+ * @returns {int} value of decimal (1 / decimal)
+ */
+async function function_get_decimal(symbol) {
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: `https://api.bybit.com/derivatives/v3/public/instruments-info?symbol=${symbol}&category=linear`,
+    };
+
+    let response = await axios(config);
+    return 1 / parseFloat(response.data.result.list[0].lotSizeFilter.qtyStep);
+}
 
 module.exports = {
+    function_get_decimal,
     futures_long_buying,
     futures_long_selling,
     futures_short_buying,
