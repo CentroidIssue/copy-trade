@@ -12,5 +12,13 @@
     "axios": "^1.6.2",
     "crypto": "^1.0.1",
     "sqlite3": "^5.1.6"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaibtdou/copy-trade.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jaibtdou/copy-trade/issues"
+  },
+  "homepage": "https://github.com/jaibtdou/copy-trade#readme"
 }

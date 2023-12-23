@@ -9,9 +9,11 @@ const { table, timeLog } = require('console');
 const { stringify } = require('querystring');
 
 //create file bybit.db if not exist
-fs.writeFile('database/bybit.db', '', function (err) {
-    if (err) return console.log(err);
-});
+if (!fs.existsSync('database')) {
+    fs.writeFile('database/bybit.db', '', function (err) {
+        if (err) return console.log(err);
+    });
+}
 const db = new sqlite3.Database('database/bybit.db');
 
 console.log("Opened database successfully");
@@ -22,7 +24,9 @@ async function get_bybit_position(leaderMark) {
     const headers = {
         'cookie': '',
     };
-    const response = await axios.get(url, { headers: headers });
+    const response = await axios.get(url, { headers: headers }).catch((error) => {
+        console.error(error);
+    });
     return response.data.result;
 }
 
@@ -75,7 +79,6 @@ async function run() {
             });
             //wait for all promises to be resolved
             const responses = await Promise.all(promises);
-            console.log(responses);
             //store all responses in response.data
             responses.data = responses.map((response) => response.data);
             //For all public.LEADER_MARK and write data to ID.json
@@ -90,7 +93,7 @@ async function run() {
                 //compare data with database
                 data.forEach((position) => {
                     //if position is not in database
-                    db.get(`SELECT * FROM '${id.ID}' WHERE symbol=? AND side=?`, [position['symbol'], position['side']], (err, row) => {
+                    db.get(`SELECT * FROM '${id.ID}' WHERE symbol=? AND side=?`, [position['symbol'], position['side']], async (err, row) => {
                         if (err) {
                             console.error(err.message);
                         }
@@ -100,14 +103,14 @@ async function run() {
                             //CConvert quantity to int then divide quantity by 1e8
                             let quantity = parseFloat(position['sizeX']) / 1e8;
                             quantity = quantity * id.ORDER_SCALE.NUME / id.ORDER_SCALE.DENO;
-                            decimal = futures.function_get_decimal(position['symbol']);
-                            quantity = quantity.toFixed(decimal);
+                            decimal = await futures.function_get_decimal(position['symbol']);
+                            quantity = (quantity * decimal).toFixed() / decimal;
                             console.log(quantity, position['sizeX'], 0);
                             if (position['side'] == "Buy") {
-                                futures.futures_long_buying(position['symbol'], (quantity).toString());
+                                futures.futures_long_buying(position['symbol'], (quantity).toString(), undefined, undefined, position['entryPrice']);
                             }
                             else{
-                                futures.futures_short_selling(position['symbol'], (quantity).toString());
+                                futures.futures_short_selling(position['symbol'], (quantity).toString(), undefined, undefined, position['entryPrice']);
                             }
                             noti.messengerBotSendText(public.USER_ID[0], serialize_message(position));
                         }
@@ -140,29 +143,30 @@ async function run() {
                                 let quantity = parseInt(position['sizeX']) / 1e8;
                                 quantity = quantity - parseInt(row.sizeX) / 1e8;
                                 quantity = quantity * id.ORDER_SCALE.NUME / id.ORDER_SCALE.DENO;
-                                decimal = futures.function_get_decimal(position['symbol']);
-                                quantity = quantity.toFixed(decimal);
+                                decimal = await futures.function_get_decimal(position['symbol'])
+                                
+                                quantity = (quantity * decimal).toFixed() / decimal;
                                 console.log(quantity, position['sizeX'], row.sizeX);
                                 if (quantity > 0){
                                     if (position['side'] == "Buy") {
-                                        futures.futures_long_buying(position['symbol'], (quantity).toString());
+                                        futures.futures_long_buying(position['symbol'], (quantity).toString(), undefined, undefined, position['entryPrice']);
                                     }
                                     else{
-                                        futures.futures_short_selling(position['symbol'], (quantity).toString());
+                                        futures.futures_short_selling(position['symbol'], (quantity).toString(), undefined, undefined, position['entryPrice']);
                                     }
                                     noti.messengerBotSendText(public.USER_ID[0], serialize_message(position));
                                 }
                                 else{
                                     quantity = -quantity;
                                     quantity = quantity * id.ORDER_SCALE.NUME / id.ORDER_SCALE.DENO;
-                                    decimal = futures.function_get_decimal(position['symbol']);
-                                    quantity = quantity.toFixed(decimal);
+                                    decimal = await futures.function_get_decimal(position['symbol']);
+                                    quantity = (quantity * decimal).toFixed() / decimal;
                                     console.log(quantity, position['sizeX'], row.sizeX);
                                     if (position['side'] == "Buy") {
-                                        futures.futures_long_selling(position['symbol'], (quantity).toString());
+                                        futures.futures_long_selling(position['symbol'], (quantity).toString(), undefined, undefined, position['entryPrice']);
                                     }
                                     else{
-                                        futures.futures_short_buying(position['symbol'], (quantity).toString());
+                                        futures.futures_short_buying(position['symbol'], (quantity).toString(), undefined, undefined, position['entryPrice']);
                                     }
                                     noti.messengerBotSendText(public.USER_ID[0], serialize_message(position));
                                 }
@@ -171,7 +175,7 @@ async function run() {
                     });
                 });
                 //if position is not in data
-                db.each(`SELECT * FROM '${id.ID}'`, (err, row) => {
+                db.each(`SELECT * FROM '${id.ID}'`, async (err, row) => {
                     if (err) {
                         console.error(err.message);
                     }
@@ -181,8 +185,8 @@ async function run() {
                         //CConvert quantity to int then divide quantity by 1e8
                         let quantity = parseInt(row.sizeX) / 1e8;
                         quantity = quantity * id.ORDER_SCALE.NUME / id.ORDER_SCALE.DENO;
-                        decimal = futures.function_get_decimal(row.symbol);
-                        quantity = quantity.toFixed(decimal);
+                        decimal = await futures.function_get_decimal(row.symbol);
+                        quantity = (quantity * decimal).toFixed() / decimal;
                         console.log(quantity);
                         if (row.side == "Buy") {
                             futures.futures_long_selling(row.symbol, (quantity).toString());
@@ -190,6 +194,7 @@ async function run() {
                         else{
                             futures.futures_short_buying(row.symbol, (quantity).toString());
                         }
+                        futures.futures_cancel_all(row.symbol);
                         noti.messengerBotSendText(public.USER_ID[0], serialize_message(row));
                     }
                 });
