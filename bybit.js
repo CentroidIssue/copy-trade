@@ -144,15 +144,20 @@ async function run() {
                                 quantity = quantity - parseInt(row.sizeX) / 1e8;
                                 quantity = quantity * id.ORDER_SCALE.NUME / id.ORDER_SCALE.DENO;
                                 decimal = await futures.function_get_decimal(position['symbol'])
-                                
                                 quantity = (quantity * decimal).toFixed() / decimal;
                                 console.log(quantity, position['sizeX'], row.sizeX);
                                 if (quantity > 0){
+                                    let price = parseFloat(position['entryPrice']);
+                                    let price_old = parseFloat(row.entryPrice);
+                                    price = price + (parseFloat(row.sizeX) / 1e8 * (price - price_old)) / quantity;
+                                    console.log(price);
+                                    price = price.toFixed(position['entryPrice'].split('.')[1].length);
+                                    console.log(price, position['entryPrice'], row.entryPrice, "DCA");
                                     if (position['side'] == "Buy") {
-                                        futures.futures_long_buying(position['symbol'], (quantity).toString(), undefined, undefined, position['entryPrice']);
+                                        futures.futures_long_buying(position['symbol'], (quantity).toString(), undefined, undefined, (price).toString());
                                     }
                                     else{
-                                        futures.futures_short_selling(position['symbol'], (quantity).toString(), undefined, undefined, position['entryPrice']);
+                                        futures.futures_short_selling(position['symbol'], (quantity).toString(), undefined, undefined, (price).toString());
                                     }
                                     noti.messengerBotSendText(public.USER_ID[0], serialize_message(position));
                                 }
