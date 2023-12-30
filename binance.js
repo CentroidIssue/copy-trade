@@ -6,9 +6,17 @@ const noti = require('./noti.js')
 const fs = require('fs');
 const { exit } = require('process');
 const { table } = require('console');
+
+// Create new file binance.db if not exist
+if (!fs.existsSync('database')) {
+    fs.writeFile('database/binance.db', '', function (err) {
+        if (err) return console.log(err);
+    });
+}
 const db = new sqlite3.Database('database/binance.db');
 
 console.log("Opened database successfully");
+const base_url = public.BINANCE_LEADER_POSITION_API;
 
 async function init() {
     noti.messengerBotSendText(public.USER_ID[0], "Background job is starting");

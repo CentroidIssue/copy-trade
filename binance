@@ -1,1 +1,1 @@
-nohup node binance.js > binance.txt
+nohup node binance.js > binance.txt &
