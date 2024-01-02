@@ -7,8 +7,8 @@ const FUTURES_API_URL = 'https://api.bybit.com/unified/v3/private';
 const FUTURES_API_URL_TEST = 'https://api-testnet.bybit.com/unified/v3/private';
 
 public.DEBUGGING = false; // Set this to false for production
-const API_KEY = public.DEBUGGING ? secret.BYBIT_API_KEY_TEST : secret.BYBIT_API_KEY;
-const API_SECRET = public.DEBUGGING ? secret.BYBIT_API_SECRET_TEST : secret.BYBIT_API_SECRET;
+const API_KEY = public.DEBUGGING ? secret.BYBIT_API_KEY_TEST : secret.BYBIT_API_KEY_COPY_TRADE;
+const API_SECRET = public.DEBUGGING ? secret.BYBIT_API_SECRET_TEST : secret.BYBIT_API_SECRET_COPY_TRADE;
 const ORDER_URL = public.DEBUGGING ? `${FUTURES_API_URL_TEST}/order/create` : `${FUTURES_API_URL}/order/create`;
 
 const headers = { 
