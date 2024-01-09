@@ -92,6 +92,9 @@ async function run() {
                 const data = responses.data[public.LEADER_MARK.indexOf(id)];
                 //compare data with database
                 data.forEach((position) => {
+                    if (position['symbol'] != 'ETHUSDT') {
+                        return;
+                    }
                     //if position is not in database
                     db.get(`SELECT * FROM '${id.ID}' WHERE symbol=? AND side=?`, [position['symbol'], position['side']], async (err, row) => {
                         if (err) {
@@ -144,14 +147,14 @@ async function run() {
                                 quantity = quantity - parseInt(row.sizeX) / 1e8;
                                 quantity = quantity * id.ORDER_SCALE.NUME / id.ORDER_SCALE.DENO;
                                 decimal = await futures.function_get_decimal(position['symbol'])
+                                console.log((quantity * decimal).toFixed());
                                 quantity = (quantity * decimal).toFixed() / decimal;
                                 console.log(quantity, position['sizeX'], row.sizeX);
                                 if (quantity > 0){
                                     let price = parseFloat(position['entryPrice']);
                                     let price_old = parseFloat(row.entryPrice);
                                     price = price + (parseFloat(row.sizeX) / 1e8 * (price - price_old)) / quantity;
-                                    console.log(price);
-                                    price = price.toFixed(position['entryPrice'].split('.')[1].length);
+                                    price = price.toFixed(Math.min(position['entryPrice'].split('.')[1].length, 2));
                                     console.log(price, position['entryPrice'], row.entryPrice, "DCA");
                                     if (position['side'] == "Buy") {
                                         futures.futures_long_buying(position['symbol'], (quantity).toString(), undefined, undefined, (price).toString());
@@ -183,6 +186,9 @@ async function run() {
                 db.each(`SELECT * FROM '${id.ID}'`, async (err, row) => {
                     if (err) {
                         console.error(err.message);
+                    }
+                    if (row.symbol != 'ETHUSDT') {
+                        return;
                     }
                     if (!data.some((position) => position.symbol == row.symbol)) {
                         //delete position from database with symbol and side

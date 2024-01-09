@@ -208,7 +208,6 @@ async function function_get_decimal(symbol) {
         maxBodyLength: Infinity,
         url: `https://api.bybit.com/derivatives/v3/public/instruments-info?symbol=${symbol}&category=linear`,
     };
-
     let response = await axios(config);
     return 1 / parseFloat(response.data.result.list[0].lotSizeFilter.qtyStep);
 };
