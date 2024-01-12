@@ -92,9 +92,6 @@ async function run() {
                 const data = responses.data[public.LEADER_MARK.indexOf(id)];
                 //compare data with database
                 data.forEach((position) => {
-                    if (position['symbol'] != 'ETHUSDT') {
-                        return;
-                    }
                     //if position is not in database
                     db.get(`SELECT * FROM '${id.ID}' WHERE symbol=? AND side=?`, [position['symbol'], position['side']], async (err, row) => {
                         if (err) {
@@ -186,9 +183,6 @@ async function run() {
                 db.each(`SELECT * FROM '${id.ID}'`, async (err, row) => {
                     if (err) {
                         console.error(err.message);
-                    }
-                    if (row.symbol != 'ETHUSDT') {
-                        return;
                     }
                     if (!data.some((position) => position.symbol == row.symbol)) {
                         //delete position from database with symbol and side
