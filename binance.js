@@ -1,6 +1,6 @@
 const axios = require('axios');
 const sqlite3 = require('sqlite3').verbose();
-const futures = require('./binance_futures.js');
+const futures = require('./bybit_futures.js');
 const public = require('./config/public.json');
 const noti = require('./noti.js')
 const fs = require('fs');

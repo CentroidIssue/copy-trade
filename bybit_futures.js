@@ -31,6 +31,7 @@ async function futures_long_buying(symbol, quantity, stoploss = null, takeprofit
     if (public.ALERT_ONLY){
       return;
     }
+    quantity = quantity.toString();
     let data_json = {
         "symbol": symbol,
         "orderType": "Market",
@@ -77,6 +78,7 @@ async function futures_long_selling(symbol, quantity){
     if (public.ALERT_ONLY){
         return;
     }
+    quantity = quantity.toString();
     let data_json = {
         "symbol": symbol,
         "orderType": "Market",
@@ -120,6 +122,7 @@ async function futures_short_selling(symbol, quantity, stoploss = null, takeprof
     if (public.ALERT_ONLY){
       return;
     }
+    quantity = quantity.toString();
     console.log(quantity);
     let data_json = {
         "symbol": symbol,
@@ -167,6 +170,7 @@ async function futures_short_buying(symbol, quantity){
     if (public.ALERT_ONLY){
         return;
     }
+    quantity = quantity.toString();
     let data_json = {
         "symbol": symbol,
         "orderType": "Market",
