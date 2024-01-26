@@ -257,4 +257,3 @@ module.exports = {
     futures_short_selling,
     futures_cancel_all
 }
-
