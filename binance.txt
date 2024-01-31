@@ -1,175 +1,73 @@
 Opened database successfully
 Database is initialized
-AxiosError: write ECONNRESET
-    at AxiosError.from (/home/jaibtdou/copy-trade/node_modules/axios/dist/node/axios.cjs:837:14)
-    at RedirectableRequest.handleRequestError (/home/jaibtdou/copy-trade/node_modules/axios/dist/node/axios.cjs:3083:25)
-    at RedirectableRequest.emit (node:events:518:28)
-    at eventHandlers.<computed> (/home/jaibtdou/copy-trade/node_modules/follow-redirects/index.js:14:24)
-    at ClientRequest.emit (node:events:518:28)
-    at TLSSocket.socketErrorListener (node:_http_client:495:9)
-    at TLSSocket.emit (node:events:518:28)
-    at emitErrorNT (node:internal/streams/destroy:169:8)
-    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
-    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
-  syscall: 'write',
-  code: 'ECONNRESET',
-  errno: -104,
-  config: {
-    transitional: {
-      silentJSONParsing: true,
-      forcedJSONParsing: true,
-      clarifyTimeoutError: false
-    },
-    adapter: [ 'xhr', 'http' ],
-    transformRequest: [ [Function: transformRequest] ],
-    transformResponse: [ [Function: transformResponse] ],
-    timeout: 0,
-    xsrfCookieName: 'XSRF-TOKEN',
-    xsrfHeaderName: 'X-XSRF-TOKEN',
-    maxContentLength: -1,
-    maxBodyLength: -1,
-    env: { FormData: [Function], Blob: [class Blob] },
-    validateStatus: [Function: validateStatus],
-    headers: Object [AxiosHeaders] {
-      Accept: 'application/json, text/plain, */*',
-      'Content-Type': undefined,
-      'User-Agent': 'axios/1.6.2',
-      'Accept-Encoding': 'gzip, compress, deflate, br'
-    },
-    method: 'get',
-    url: 'https://www.binance.com/bapi/futures/v1/friendly/future/copy-trade/lead-data/positions?portfolioId=3759503442786048513',
-    data: undefined
-  },
-  request: <ref *1> Writable {
-    _events: {
-      close: undefined,
-      error: [Function: handleRequestError],
-      prefinish: undefined,
-      finish: undefined,
-      drain: undefined,
-      response: [Function: handleResponse],
-      socket: [Function: handleRequestSocket]
-    },
-    _writableState: WritableState {
-      highWaterMark: 16384,
-      length: 0,
-      corked: 0,
-      onwrite: [Function: bound onwrite],
-      writelen: 0,
-      bufferedIndex: 0,
-      pendingcb: 0,
-      [Symbol(kState)]: 17580812,
-      [Symbol(kBufferedValue)]: null
-    },
-    _maxListeners: undefined,
-    _options: {
-      maxRedirects: 21,
-      maxBodyLength: Infinity,
-      protocol: 'https:',
-      path: '/bapi/futures/v1/friendly/future/copy-trade/lead-data/positions?portfolioId=3759503442786048513',
-      method: 'GET',
-      headers: [Object: null prototype],
-      agents: [Object],
-      auth: undefined,
-      family: undefined,
-      beforeRedirect: [Function: dispatchBeforeRedirect],
-      beforeRedirects: [Object],
-      hostname: 'www.binance.com',
-      port: '',
-      agent: undefined,
-      nativeProtocols: [Object],
-      pathname: '/bapi/futures/v1/friendly/future/copy-trade/lead-data/positions',
-      search: '?portfolioId=3759503442786048513'
-    },
-    _ended: true,
-    _ending: true,
-    _redirectCount: 0,
-    _redirects: [],
-    _requestBodyLength: 0,
-    _requestBodyBuffers: [],
-    _eventsCount: 3,
-    _onNativeResponse: [Function (anonymous)],
-    _currentRequest: ClientRequest {
-      _events: [Object: null prototype],
-      _eventsCount: 7,
-      _maxListeners: undefined,
-      outputData: [],
-      outputSize: 0,
-      writable: true,
-      destroyed: false,
-      _last: true,
-      chunkedEncoding: false,
-      shouldKeepAlive: true,
-      maxRequestsOnConnectionReached: false,
-      _defaultKeepAlive: true,
-      useChunkedEncodingByDefault: false,
-      sendDate: false,
-      _removedConnection: false,
-      _removedContLen: false,
-      _removedTE: false,
-      strictContentLength: false,
-      _contentLength: 0,
-      _hasBody: true,
-      _trailer: '',
-      finished: true,
-      _headerSent: true,
-      _closed: false,
-      socket: [TLSSocket],
-      _header: 'GET /bapi/futures/v1/friendly/future/copy-trade/lead-data/positions?portfolioId=3759503442786048513 HTTP/1.1\r\n' +
-        'Accept: application/json, text/plain, */*\r\n' +
-        'User-Agent: axios/1.6.2\r\n' +
-        'Accept-Encoding: gzip, compress, deflate, br\r\n' +
-        'Host: www.binance.com\r\n' +
-        'Connection: keep-alive\r\n' +
-        '\r\n',
-      _keepAliveTimeout: 0,
-      _onPendingData: [Function: nop],
-      agent: [Agent],
-      socketPath: undefined,
-      method: 'GET',
-      maxHeaderSize: undefined,
-      insecureHTTPParser: undefined,
-      joinDuplicateHeaders: undefined,
-      path: '/bapi/futures/v1/friendly/future/copy-trade/lead-data/positions?portfolioId=3759503442786048513',
-      _ended: false,
-      res: null,
-      aborted: false,
-      timeoutCb: [Function: emitRequestTimeout],
-      upgradeOrConnect: false,
-      parser: null,
-      maxHeadersCount: null,
-      reusedSocket: true,
-      host: 'www.binance.com',
-      protocol: 'https:',
-      _redirectable: [Circular *1],
-      [Symbol(shapeMode)]: false,
-      [Symbol(kCapture)]: false,
-      [Symbol(kBytesWritten)]: 0,
-      [Symbol(kNeedDrain)]: false,
-      [Symbol(corked)]: 0,
-      [Symbol(kOutHeaders)]: [Object: null prototype],
-      [Symbol(errored)]: null,
-      [Symbol(kHighWaterMark)]: 16384,
-      [Symbol(kRejectNonStandardBodyWrites)]: false,
-      [Symbol(kUniqueHeaders)]: null
-    },
-    _currentUrl: 'https://www.binance.com/bapi/futures/v1/friendly/future/copy-trade/lead-data/positions?portfolioId=3759503442786048513',
-    [Symbol(shapeMode)]: true,
-    [Symbol(kCapture)]: false
-  },
-  cause: Error: write ECONNRESET
-      at WriteWrap.onWriteComplete [as oncomplete] (node:internal/stream_base_commons:94:16)
-      at handleWriteReq (node:internal/stream_base_commons:58:21)
-      at writeGeneric (node:internal/stream_base_commons:149:15)
-      at Socket._writeGeneric (node:net:952:11)
-      at Socket._write (node:net:964:8)
-      at doWrite (node:internal/streams/writable:590:12)
-      at clearBuffer (node:internal/streams/writable:773:7)
-      at Writable.uncork (node:internal/streams/writable:523:7)
-      at ClientRequest._flushOutput (node:_http_outgoing:1151:10)
-      at ClientRequest._flush (node:_http_outgoing:1120:22) {
-    errno: -104,
-    code: 'ECONNRESET',
-    syscall: 'write'
-  }
+3759503442786048513 New position:
+id: 0_ZRXUSDT_BOTH
+symbol: ZRXUSDT
+collateral: USDT
+positionAmount: 0.0
+entryPrice: 0.0
+unrealizedProfit: 0.00000000
+cumRealized: 0
+askNotional: 0
+bidNotional: 0
+notionalValue: 0
+markPrice: 0.00000000
+leverage: 10
+isolated: false
+isolatedWallet: 0
+adl: 0
+positionSide: BOTH
+breakEvenPrice: 0.0
+
+3759503442786048513 New position:
+id: 0_ZRXUSDT_LONG
+symbol: ZRXUSDT
+collateral: USDT
+positionAmount: 0.0
+entryPrice: 0.0
+unrealizedProfit: 0.00000000
+cumRealized: 0
+askNotional: 0
+bidNotional: 0
+notionalValue: 0
+markPrice: 0.00000000
+leverage: 10
+isolated: false
+isolatedWallet: 0
+adl: 0
+positionSide: LONG
+breakEvenPrice: 0.0
+
+{
+  symbol: 'ZRXUSDT',
+  orderType: 'Market',
+  side: 'Buy',
+  qty: '0.0',
+  timeInForce: 'GoodTillCancel',
+  category: 'linear',
+  positionIdx: '1',
+  stopLoss: null,
+  takeProfit: null
 }
+3759503442786048513 New position:
+id: 0_ZRXUSDT_SHORT
+symbol: ZRXUSDT
+collateral: USDT
+positionAmount: 0.0
+entryPrice: 0.0
+unrealizedProfit: 0.00000000
+cumRealized: 0
+askNotional: 0
+bidNotional: 0
+notionalValue: 0
+markPrice: 0.00000000
+leverage: 10
+isolated: false
+isolatedWallet: 0
+adl: 0
+positionSide: SHORT
+breakEvenPrice: 0.0
+
+0.0
+{"retCode":10002,"retMsg":"invalid request, please check your server timestamp or recv_window param. req_timestamp[1706286079539],server_timestamp[1706286294569],recv_window[5000]","result":{},"retExtInfo":{},"time":1706286294569}
+{"retCode":10002,"retMsg":"invalid request, please check your server timestamp or recv_window param. req_timestamp[1706286079543],server_timestamp[1706286299602],recv_window[5000]","result":{},"retExtInfo":{},"time":1706286299602}

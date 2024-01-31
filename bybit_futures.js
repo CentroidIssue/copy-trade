@@ -14,8 +14,8 @@ const ORDER_URL = public.DEBUGGING ? `${FUTURES_API_URL_TEST}/order/create` : `$
 const headers = { 
     'X-BAPI-SIGN-TYPE': '2', 
     'X-BAPI-SIGN': '', 
-    'X-BAPI-API-KEY': API_KEY, 
-    'X-BAPI-TIMESTAMP': '', 
+    'X-BAPI-API-KEY': API_KEY,
+    'X-BAPI-TIMESTAMP': '',
     'Content-Type': 'application/json'
 };
 /**
@@ -41,7 +41,7 @@ async function futures_long_buying(symbol, quantity, stoploss = null, takeprofit
         "category": "linear",
         "positionIdx": "1",
         "stopLoss": stoploss,
-        "takeProfit": takeprofit
+        "takeProfit": takeprofit,
     };
     if (price != null) {
         data_json['price'] = price;

@@ -6,4 +6,4 @@ ADD . /copy-trade
 
 RUN npm i
 
-CMD ["node", "bybit.js"]
+CMD ["node", "binance.js"]
