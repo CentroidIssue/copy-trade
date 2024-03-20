@@ -3,8 +3,8 @@ const axios = require('axios');
 const secret = require('./config/secret.json')
 const public = require('./config/public.json');
 const { builtinModules } = require('module');
-const FUTURES_API_URL = 'https://api.bybit.com/unified/v3/private';
-const FUTURES_API_URL_TEST = 'https://api-testnet.bybit.com/unified/v3/private';
+const FUTURES_API_URL = 'https://api.bybit.com/v5/private';
+const FUTURES_API_URL_TEST = 'https://api-testnet.bybit.com/v5/private';
 
 public.DEBUGGING = false; // Set this to false for production
 const API_KEY = public.DEBUGGING ? secret.BYBIT_API_KEY_TEST : secret.BYBIT_API_KEY_COPY_TRADE;
@@ -57,7 +57,7 @@ async function futures_long_buying(symbol, quantity, stoploss = null, takeprofit
     let config = {
     method: 'post',
     maxBodyLength: Infinity,
-    url: 'https://api.bybit.com/unified/v3/private/order/create',
+    url: 'https://api.bybit.com/v5/order/create',
     headers: headers,
     data : data
     };
@@ -97,7 +97,7 @@ async function futures_long_selling(symbol, quantity){
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://api.bybit.com/unified/v3/private/order/create',
+        url: 'https://api.bybit.com/v5/order/create',
         headers: headers,
         data : data
     };
@@ -148,7 +148,7 @@ async function futures_short_selling(symbol, quantity, stoploss = null, takeprof
     let config = {
     method: 'post',
     maxBodyLength: Infinity,
-    url: 'https://api.bybit.com/unified/v3/private/order/create',
+    url: 'https://api.bybit.com/v5/order/create',
     headers: headers,
     data : data
     };
@@ -189,7 +189,7 @@ async function futures_short_buying(symbol, quantity){
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://api.bybit.com/unified/v3/private/order/create',
+        url: 'https://api.bybit.com/v5/order/create',
         headers: headers,
         data : data
     };
