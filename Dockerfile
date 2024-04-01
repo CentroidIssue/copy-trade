@@ -1,4 +1,4 @@
-FROM node:12.22.9
+FROM node:21
 
 WORKDIR /copy-trade
 
@@ -6,4 +6,4 @@ ADD . /copy-trade
 
 RUN npm i
 
-CMD ["node", "binance.js"]
+CMD ["node", "index.js"]

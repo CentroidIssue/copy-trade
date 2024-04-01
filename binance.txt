@@ -1,73 +1,204 @@
 Opened database successfully
-Database is initialized
-3759503442786048513 New position:
-id: 0_ZRXUSDT_BOTH
-symbol: ZRXUSDT
-collateral: USDT
-positionAmount: 0.0
-entryPrice: 0.0
-unrealizedProfit: 0.00000000
-cumRealized: 0
-askNotional: 0
-bidNotional: 0
-notionalValue: 0
-markPrice: 0.00000000
-leverage: 10
-isolated: false
-isolatedWallet: 0
-adl: 0
-positionSide: BOTH
-breakEvenPrice: 0.0
-
-3759503442786048513 New position:
-id: 0_ZRXUSDT_LONG
-symbol: ZRXUSDT
-collateral: USDT
-positionAmount: 0.0
-entryPrice: 0.0
-unrealizedProfit: 0.00000000
-cumRealized: 0
-askNotional: 0
-bidNotional: 0
-notionalValue: 0
-markPrice: 0.00000000
-leverage: 10
-isolated: false
-isolatedWallet: 0
-adl: 0
-positionSide: LONG
-breakEvenPrice: 0.0
-
-{
-  symbol: 'ZRXUSDT',
-  orderType: 'Market',
-  side: 'Buy',
-  qty: '0.0',
-  timeInForce: 'GoodTillCancel',
-  category: 'linear',
-  positionIdx: '1',
-  stopLoss: null,
-  takeProfit: null
+3/21/2024, 7:54:27 AM
+AxiosError [AggregateError]
+    at AxiosError.from (/home/pdt/copy-trade/node_modules/axios/dist/node/axios.cjs:837:14)
+    at RedirectableRequest.handleRequestError (/home/pdt/copy-trade/node_modules/axios/dist/node/axios.cjs:3083:25)
+    at RedirectableRequest.emit (node:events:519:28)
+    at eventHandlers.<computed> (/home/pdt/copy-trade/node_modules/follow-redirects/index.js:38:24)
+    at ClientRequest.emit (node:events:519:28)
+    at TLSSocket.socketErrorListener (node:_http_client:492:9)
+    at TLSSocket.emit (node:events:519:28)
+    at emitErrorNT (node:internal/streams/destroy:169:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'ETIMEDOUT',
+  errors: [
+    Error: connect ETIMEDOUT 157.240.205.1:443
+        at createConnectionError (node:net:1643:14)
+        at Timeout.internalConnectMultipleTimeout (node:net:1702:38)
+        at listOnTimeout (node:internal/timers:575:11)
+        at process.processTimers (node:internal/timers:514:7) {
+      errno: -110,
+      code: 'ETIMEDOUT',
+      syscall: 'connect',
+      address: '157.240.205.1',
+      port: 443
+    },
+    Error: connect ENETUNREACH 2a03:2880:f00c:20d:face:b00c:0:2:443 - Local (:::0)
+        at internalConnectMultiple (node:net:1180:16)
+        at Timeout.internalConnectMultipleTimeout (node:net:1707:5)
+        at listOnTimeout (node:internal/timers:575:11)
+        at process.processTimers (node:internal/timers:514:7) {
+      errno: -101,
+      code: 'ENETUNREACH',
+      syscall: 'connect',
+      address: '2a03:2880:f00c:20d:face:b00c:0:2',
+      port: 443
+    }
+  ],
+  config: {
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false
+    },
+    adapter: [ 'xhr', 'http' ],
+    transformRequest: [ [Function: transformRequest] ],
+    transformResponse: [ [Function: transformResponse] ],
+    timeout: 0,
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    env: { FormData: [Function], Blob: [class Blob] },
+    validateStatus: [Function: validateStatus],
+    headers: Object [AxiosHeaders] {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+      'User-Agent': 'axios/1.6.2',
+      'Content-Length': '139',
+      'Accept-Encoding': 'gzip, compress, deflate, br'
+    },
+    method: 'post',
+    url: 'https://graph.facebook.com/v16.0/me/messages?access_token=EAAD6Jr5TXbkBO6xCIlr3ZBorjTZC1ZAHgB0ZC9EG634UUscmuLlDEU7m3s2tMvZARL0J3AC7B3a50QADk5yfjMPZBYwbrR0y7PcRrEgumKQeViKlaSkzHdbnntMmtMlBjef2nZCgWRsiGFJZCVY7uurBMFMTqFI1OvDOkHTUficwJI6ZCJHQGnvFJdYmvQabyyjikhZCL1mrNvLuuEpsh0',
+    data: '{"message":{"text":"Background job is starting"},"recipient":{"id":6250576574993882},"messaging_type":"MESSAGE_TAG","tag":"ACCOUNT_UPDATE"}'
+  },
+  request: <ref *1> Writable {
+    _events: {
+      close: undefined,
+      error: [Function: handleRequestError],
+      prefinish: undefined,
+      finish: undefined,
+      drain: undefined,
+      response: [Function: handleResponse],
+      socket: [Function: handleRequestSocket]
+    },
+    _writableState: WritableState {
+      highWaterMark: 16384,
+      length: 0,
+      corked: 0,
+      onwrite: [Function: bound onwrite],
+      writelen: 0,
+      bufferedIndex: 0,
+      pendingcb: 0,
+      [Symbol(kState)]: 17580812,
+      [Symbol(kBufferedValue)]: null
+    },
+    _maxListeners: undefined,
+    _options: {
+      maxRedirects: 21,
+      maxBodyLength: Infinity,
+      protocol: 'https:',
+      path: '/v16.0/me/messages?access_token=EAAD6Jr5TXbkBO6xCIlr3ZBorjTZC1ZAHgB0ZC9EG634UUscmuLlDEU7m3s2tMvZARL0J3AC7B3a50QADk5yfjMPZBYwbrR0y7PcRrEgumKQeViKlaSkzHdbnntMmtMlBjef2nZCgWRsiGFJZCVY7uurBMFMTqFI1OvDOkHTUficwJI6ZCJHQGnvFJdYmvQabyyjikhZCL1mrNvLuuEpsh0',
+      method: 'POST',
+      headers: [Object: null prototype],
+      agents: [Object],
+      auth: undefined,
+      family: undefined,
+      beforeRedirect: [Function: dispatchBeforeRedirect],
+      beforeRedirects: [Object],
+      hostname: 'graph.facebook.com',
+      port: '',
+      agent: undefined,
+      nativeProtocols: [Object],
+      pathname: '/v16.0/me/messages',
+      search: '?access_token=EAAD6Jr5TXbkBO6xCIlr3ZBorjTZC1ZAHgB0ZC9EG634UUscmuLlDEU7m3s2tMvZARL0J3AC7B3a50QADk5yfjMPZBYwbrR0y7PcRrEgumKQeViKlaSkzHdbnntMmtMlBjef2nZCgWRsiGFJZCVY7uurBMFMTqFI1OvDOkHTUficwJI6ZCJHQGnvFJdYmvQabyyjikhZCL1mrNvLuuEpsh0'
+    },
+    _ended: false,
+    _ending: true,
+    _redirectCount: 0,
+    _redirects: [],
+    _requestBodyLength: 139,
+    _requestBodyBuffers: [ [Object] ],
+    _eventsCount: 3,
+    _onNativeResponse: [Function (anonymous)],
+    _currentRequest: ClientRequest {
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      outputData: [],
+      outputSize: 0,
+      writable: true,
+      destroyed: false,
+      _last: false,
+      chunkedEncoding: false,
+      shouldKeepAlive: true,
+      maxRequestsOnConnectionReached: false,
+      _defaultKeepAlive: true,
+      useChunkedEncodingByDefault: true,
+      sendDate: false,
+      _removedConnection: false,
+      _removedContLen: false,
+      _removedTE: false,
+      strictContentLength: false,
+      _contentLength: '139',
+      _hasBody: true,
+      _trailer: '',
+      finished: false,
+      _headerSent: true,
+      _closed: false,
+      _header: 'POST /v16.0/me/messages?access_token=EAAD6Jr5TXbkBO6xCIlr3ZBorjTZC1ZAHgB0ZC9EG634UUscmuLlDEU7m3s2tMvZARL0J3AC7B3a50QADk5yfjMPZBYwbrR0y7PcRrEgumKQeViKlaSkzHdbnntMmtMlBjef2nZCgWRsiGFJZCVY7uurBMFMTqFI1OvDOkHTUficwJI6ZCJHQGnvFJdYmvQabyyjikhZCL1mrNvLuuEpsh0 HTTP/1.1\r\n' +
+        'Accept: application/json, text/plain, */*\r\n' +
+        'Content-Type: application/json\r\n' +
+        'User-Agent: axios/1.6.2\r\n' +
+        'Content-Length: 139\r\n' +
+        'Accept-Encoding: gzip, compress, deflate, br\r\n' +
+        'Host: graph.facebook.com\r\n' +
+        'Connection: keep-alive\r\n' +
+        '\r\n',
+      _keepAliveTimeout: 0,
+      _onPendingData: [Function: nop],
+      agent: [Agent],
+      socketPath: undefined,
+      method: 'POST',
+      maxHeaderSize: undefined,
+      insecureHTTPParser: undefined,
+      joinDuplicateHeaders: undefined,
+      path: '/v16.0/me/messages?access_token=EAAD6Jr5TXbkBO6xCIlr3ZBorjTZC1ZAHgB0ZC9EG634UUscmuLlDEU7m3s2tMvZARL0J3AC7B3a50QADk5yfjMPZBYwbrR0y7PcRrEgumKQeViKlaSkzHdbnntMmtMlBjef2nZCgWRsiGFJZCVY7uurBMFMTqFI1OvDOkHTUficwJI6ZCJHQGnvFJdYmvQabyyjikhZCL1mrNvLuuEpsh0',
+      _ended: false,
+      res: null,
+      aborted: false,
+      timeoutCb: [Function: emitRequestTimeout],
+      upgradeOrConnect: false,
+      parser: null,
+      maxHeadersCount: null,
+      reusedSocket: false,
+      host: 'graph.facebook.com',
+      protocol: 'https:',
+      _redirectable: [Circular *1],
+      [Symbol(shapeMode)]: false,
+      [Symbol(kCapture)]: false,
+      [Symbol(kBytesWritten)]: 0,
+      [Symbol(kNeedDrain)]: false,
+      [Symbol(corked)]: 0,
+      [Symbol(kChunkedBuffer)]: [],
+      [Symbol(kChunkedLength)]: 0,
+      [Symbol(kSocket)]: [TLSSocket],
+      [Symbol(kOutHeaders)]: [Object: null prototype],
+      [Symbol(errored)]: null,
+      [Symbol(kHighWaterMark)]: 16384,
+      [Symbol(kRejectNonStandardBodyWrites)]: false,
+      [Symbol(kUniqueHeaders)]: null
+    },
+    _currentUrl: 'https://graph.facebook.com/v16.0/me/messages?access_token=EAAD6Jr5TXbkBO6xCIlr3ZBorjTZC1ZAHgB0ZC9EG634UUscmuLlDEU7m3s2tMvZARL0J3AC7B3a50QADk5yfjMPZBYwbrR0y7PcRrEgumKQeViKlaSkzHdbnntMmtMlBjef2nZCgWRsiGFJZCVY7uurBMFMTqFI1OvDOkHTUficwJI6ZCJHQGnvFJdYmvQabyyjikhZCL1mrNvLuuEpsh0',
+    [Symbol(shapeMode)]: true,
+    [Symbol(kCapture)]: false
+  },
+  cause: AggregateError [ETIMEDOUT]: 
+      at internalConnectMultiple (node:net:1116:18)
+      at internalConnectMultiple (node:net:1184:5)
+      at Timeout.internalConnectMultipleTimeout (node:net:1707:5)
+      at listOnTimeout (node:internal/timers:575:11)
+      at process.processTimers (node:internal/timers:514:7) {
+    code: 'ETIMEDOUT',
+    [errors]: [ [Error], [Error] ]
+  }
 }
-3759503442786048513 New position:
-id: 0_ZRXUSDT_SHORT
-symbol: ZRXUSDT
-collateral: USDT
-positionAmount: 0.0
-entryPrice: 0.0
-unrealizedProfit: 0.00000000
-cumRealized: 0
-askNotional: 0
-bidNotional: 0
-notionalValue: 0
-markPrice: 0.00000000
-leverage: 10
-isolated: false
-isolatedWallet: 0
-adl: 0
-positionSide: SHORT
-breakEvenPrice: 0.0
-
-0.0
-{"retCode":10002,"retMsg":"invalid request, please check your server timestamp or recv_window param. req_timestamp[1706286079539],server_timestamp[1706286294569],recv_window[5000]","result":{},"retExtInfo":{},"time":1706286294569}
-{"retCode":10002,"retMsg":"invalid request, please check your server timestamp or recv_window param. req_timestamp[1706286079543],server_timestamp[1706286299602],recv_window[5000]","result":{},"retExtInfo":{},"time":1706286299602}
+reason:
+{
+  message: { text: 'Background job is starting' },
+  recipient: { id: 6250576574993882 },
+  messaging_type: 'MESSAGE_TAG',
+  tag: 'ACCOUNT_UPDATE'
+}
+Database is initialized
