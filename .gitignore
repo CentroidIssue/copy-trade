@@ -6,4 +6,4 @@ database/*
 bybit.txt
 binance.txt
 
-config/*
+config/private.json

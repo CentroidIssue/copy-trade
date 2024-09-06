@@ -1,0 +1,28 @@
+{
+    "IP": "98.70.2.182",
+    "DEBUGGING": false,
+    "ALERT_ONLY": false,
+    "USER_ID": [6250576574993882, 6028351877280858],
+    "FUTURES_API_URL": "https://fapi.binance.com",
+    "FUTURES_API_URL_TEST": "https://testnet.binancefuture.com",
+    "BINANCE_LEADER_POSITION_API": "https://www.binance.com/bapi/futures/v1/friendly/future/copy-trade/lead-data/positions?",
+    "BYBIT_LEADER_POSITION_API": "https://api2.bybit.com/fapi/beehive/public/v1/common/position/list?",
+    "PROFILE_ID": [
+        {
+            "ID": "3797540493213995264",
+            "ORDER_SCALE": {
+                "NUME": 1,
+                "DENO": 60
+            }
+        }
+    ],
+    "LEADER_MARK": [
+        {
+            "ID": "Nb0OKxAC0v5%2FRLXHkUm3Xg%3D%3D",
+            "ORDER_SCALE": {
+                "NUME": 1,
+                "DENO": 40
+            }
+        }
+    ]
+}
