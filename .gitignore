@@ -5,3 +5,5 @@ copy-trade.txt
 database/*
 bybit.txt
 binance.txt
+
+config/*
